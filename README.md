@@ -115,8 +115,30 @@ bash load-postgres/load_job_postgres.sh ../../datasets/job
 
 ### extension
 
-Install 
+1. Install extension pg_prewarm 
+```bash
+cd ~/postgresql-12.5/contrib/pg_prewarm
+make
+make install
 
+psql -d imdb -c create extension pg_prewarm
+psql -d stack -c create extension pg_prewarm
+psql -d tpcds -c create extension pg_prewarm
+```
+
+
+2. Install extension pgfincore
+```bash
+cd ~/
+git clone git://git.postgresql.org/git/pgfincore.git 
+cd pgfincore
+make
+make install
+
+psql -d imdb -c create extension pgfincore
+psql -d stack -c create extension pgfincore
+psql -d tpcds -c create extension pgfincore
+```
 
 ## prepare
 
@@ -141,6 +163,13 @@ Install
 ## Stage two
 
 ### Delta
+
+#### move
+
+check list: PG_Plans, train_history, test_history
+```bash
+
+```
 
 #### train
 
