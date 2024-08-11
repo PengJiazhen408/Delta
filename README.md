@@ -4,11 +4,11 @@ Delta is a unified framework on top of DRL-based Query Optimizers.
 
 This is the source code of "Delta: A Unified Reinforcement Learning-Based Query Optimization Framework [Scalable Data Science]"
 
-## install
+## Install
 
 To quickly get started, run the following on one machine which will run both the leanrned quey optimizers and query execution.
 
-### requirement
+### Requirement
 
 Clone and install Delta
 
@@ -90,7 +90,7 @@ Restart the PostgreSQL
 pg_ctl restart -D $PSQL_DATA_DIRECTORY
 ```
 
-### dataset
+### Dataset
 
 1. Load the Join Order Benchmark (JOB) tables: (following Balsa)
 ```bash
@@ -113,7 +113,7 @@ bash load-postgres/load_job_postgres.sh ../../datasets/job
 
 ```
 
-### extension
+### Extension
 
 1. Install extension pg_prewarm 
 ```bash
@@ -140,38 +140,38 @@ psql -d stack -c create extension pgfincore
 psql -d tpcds -c create extension pgfincore
 ```
 
-## prepare
+## Prepare
 
 ### Prewarm the buffer
 
-### run baseline and store PG plans for comparation
+### Run baseline and store PG plans for comparation
 
 ## Stage one
 
-### balsa
+### Balsa
 
-#### train
+#### Train
 
-#### test
+#### Test
 
 ### LOGER
 
-#### train
+#### Train
 
-#### test
+#### Test
 
 ## Stage two
 
 ### Delta
 
-#### move
+#### Move
 
 check list: PG_Plans, train_history, test_history
 ```bash
 
 ```
 
-#### train
+#### Train
 
-#### test
+#### Test
 
