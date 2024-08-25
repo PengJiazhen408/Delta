@@ -188,9 +188,7 @@ class _global:
             self.__cur.execute("set from_collapse_limit = 1;")
             self.__cur.execute("set join_collapse_limit = 1;")
             self.__cur.execute(f"set geqo_threshold = {self.geqo_threshold};")
-        # @pjz modify
-        # self.__cur.execute("set max_parallel_workers = 1;")
-        # self.__cur.execute("set max_parallel_workers_per_gather = 1;")
+
         self.__cur.execute(f"SET statement_timeout = {self.statement_timeout};")
 
     def boundary(self, table, column):
@@ -330,10 +328,10 @@ class _global:
     def __latency(self, sql, cache=True):
         res = self.plan_latency(sql, cache=cache)
         cost = res[0][0][0]['Plan']['Actual Total Time']
-        # @pjz modify
+
         return cost, res[0][0][0]
 
-    def fcx_explain(self, sql):
+    def _explain(self, sql):
         plan = None
         self.__pre_settings()
         try:
@@ -343,21 +341,6 @@ class _global:
         except Exception as e:
             self.__db.commit()
         return plan
-
-    # def __fcx_plan(self, sql, cache=True):
-    #     return self.plan_latency(sql, cache=cache)[0][0][0]
-    
-    # def fcx_plan(self, sql, cache=True, throw=False):
-    #     assert self.__db is not None
-    #     self.__pre_settings()
-    #     try:
-    #         plan = self.__fcx_plan(sql, cache=cache)
-    #     except Exception as e:
-    #         plan = None
-    #         self.__db.commit()
-    #         if throw:
-    #             raise e
-    #     return plan
 
     def latency(self, sql, origin=None, cache=True, throw=False):
         assert self.__db is not None
@@ -369,7 +352,7 @@ class _global:
         if origin is None:
             latency = None
             try:
-                # @pjz modify
+
                 latency, plan = self.__latency(sql, cache=cache)
             except Exception as e:
                 self.__db.commit()
@@ -377,11 +360,11 @@ class _global:
                      raise e
             if latency is None:
                 latency = timeout_limit
-                # @pjz modify
+
                 plan = None
             self.__latency_cache[sql] = latency
             self.__auto_save()
-            # @pjz modify
+
             return latency, plan
 
         cost = self.cost(sql)
@@ -390,7 +373,7 @@ class _global:
         latency = None
         if cost / cost_origin < 100:
             try:
-                # @pjz modify
+
                 latency, plan = self.__latency(sql, cache=cache)
             except Exception as e:
                 self.__db.commit()
@@ -398,7 +381,7 @@ class _global:
                     raise e
         if latency is None:
             tmp = self.latency(origin, cache=cache)
-            # @pjz modify
+
             if type(tmp) == float or type(tmp) == int:
                 latency_origin = tmp
                 plan = None
@@ -407,7 +390,7 @@ class _global:
             latency = min(cost / cost_origin * latency_origin, timeout_limit)
         self.__latency_cache[latency] = latency
         self.__auto_save()
-        # @pjz modify
+
         return latency, plan
 
     def __timeout_limit(self, sql):

@@ -340,7 +340,7 @@ def validate(test_set, iter, train=False, bushy=False):
     model.eval_mode()
     res = []
     rcs = []
-    pjz_res = []
+    _res = []
     train_data = []
     _timer = timer()
     with torch.no_grad():
@@ -383,7 +383,7 @@ def validate(test_set, iter, train=False, bushy=False):
             relative_latency = exec_time / pg_exec_time
             relative_e2e = e2e_time / pg_e2e_time
             # 'filename', 'planning_time', 'exec_time', 'e2e_time', 'pg_exec_time', 'pg_e2e_time', 'relative_latency','relative_e2e', 
-            pjz_res.append((sql.filename[:-4], planning_time, exec_time, e2e_time, pg_exec_time, pg_e2e_time, relative_latency, relative_e2e))
+            _res.append((sql.filename[:-4], planning_time, exec_time, e2e_time, pg_exec_time, pg_e2e_time, relative_latency, relative_e2e))
             
             postfix = {
                 'rc': raw_rc,
@@ -398,7 +398,7 @@ def validate(test_set, iter, train=False, bushy=False):
                         raw_rc, rc, use_generated, use_generated_rc, plan_str, str(sql.baseline.result_order)))
             rcs.append((use_generated_rc, raw_rc, rc))
     rcs, raw_rcs, gen_rcs = zip(*rcs)
-    return rcs, res, gen_rcs, raw_rcs, pjz_res
+    return rcs, res, gen_rcs, raw_rcs, _res
 
 def database_warmup(train_set, k=400):
     if k <= len(train_set):
@@ -717,7 +717,7 @@ def train(beam_width=1, epochs=400):
                     
                     log('Resampling')
                     resample_start_time = time.time()
-                    rcs, res, gen_rcs, raw_rcs, pjz_res = validate(train_set, epoch, bushy=bushy, train=True)
+                    rcs, res, gen_rcs, raw_rcs, _res = validate(train_set, epoch, bushy=bushy, train=True)
 
                     train_gmrc = math.exp(sum(map(math.log, rcs)) / len(rcs))
                     train_gmrc_ori = math.exp(sum(map(math.log, gen_rcs)) / len(gen_rcs))

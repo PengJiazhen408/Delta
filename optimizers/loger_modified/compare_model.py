@@ -33,7 +33,7 @@ CACHE_FILE = 'latency_cache.pkl'
 def validate_top10(beam_width=1, epochs=400):
     use_beam = beam_width >= 1
     start_epoch = 0
-    fcx_df = []
+    _df = []
 
     checkpoint_file = 'temps/ckpts/1.{}.checkpoint.pkl'
     dic0 = torch.load(checkpoint_file.format(0), map_location=device)

@@ -1,7 +1,7 @@
 #!/bin/bash
 workload=$1
 split=$2
-# @fcx
+
 # port=${3:-5432}
 port=${3:-5432}
 

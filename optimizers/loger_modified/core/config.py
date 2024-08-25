@@ -4,7 +4,7 @@ class Config:
     feature_extra_length = 1
 
     validate_start = 0
-    # @fcx: modify
+
     # validate_interval = 4
     validate_interval = 100
     test_interval = 1

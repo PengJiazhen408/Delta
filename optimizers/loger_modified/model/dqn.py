@@ -287,16 +287,14 @@ class DeepQNet:
             print("Warning: not using beam")
             beam_width = 1
 
-        # @fcx modify
+
         use_beam = True
         if find_top10:
             beam_width = 20
         else:
             beam_width = 4
 
-        # @fcx jobrstop10
-        # @fcx 在这里改改就可以实现top10的功能了, topk还得配置下beam_width
-        # @fcx 对于每一轮的多个query，分别记录top1和top10的时间，改beam_width就行
+
         while not plans[0].completed:
             selected = self.topk_search(plans, beam_width, exploration=False, use_beam=use_beam, bushy=bushy)
             plans = []
@@ -304,20 +302,14 @@ class DeepQNet:
                 plan = plan.clone(deep=True)
                 self.step(plan, action, join=join)
                 plans.append(plan)
-            # # @ fcx test
-            # if plans[0].completed:
-            #     for idx in range(0, len(plans)):
-            #         print(f"{idx} : {plans[idx].completed}")
-            #     print("\n")
-        
-        # @fcx top1 plan
+
         plan = plans[0]
         _timer = timer()
         with _timer:
             use_generated = False
 
         if find_top10:
-            # @fcx 在这里返回plans[0,9]
+
             if(len(plans) >= 10):
                 plans = plans[:10]
             return plans, use_generated, _timer.time

@@ -101,7 +101,7 @@ def save_history(plan, query_name, history_dir, is_test, iter_value=0, is_top1=N
         f.write(plan_signature)
     with open(os.path.join(history_plan_path, "plan"), "w") as f:
         f.write(str(plan))
-    # @fcx modify
+
     if is_top1 is not None:
         with open(os.path.join(history_plan_path, f"{is_top1}"), "w") as f:
             f.write(str(is_top1))
