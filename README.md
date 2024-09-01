@@ -42,6 +42,7 @@ pip install -r requirements.txt
 ### PostgreSQL
 
 Install the PostgreSQL 12.5 from source by running following commands.
+
 Remeber replace $YOUR_PG_LOCATION and $PSQL_DATA_DIRECTORY by your configures.
 
 ```bash
@@ -72,7 +73,8 @@ make
 make install
 ```
 
-Modify the PostgeSQL configuration
+Modify the PostgeSQL configuration.
+
 Add the following configures to the tail of  $PSQL_DATA_DIRECTORY/postgres.conf
 
 ```bash
