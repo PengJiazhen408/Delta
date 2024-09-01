@@ -236,11 +236,10 @@ Copy  `pg_exec` and `pg_e2e` dict from the output of `run_workload_store_plans.p
 ## Stage one
 
 If you run Balsa-Delta, only need to run Balsa in the stage one.
+
 If you run LOGER-Delta, only need to run LOGER in the stage one.
 
 ### Balsa
-
-We modified the source code of [Balsa](https://github.com/balsa-project/balsa) by
 
 We made the following modifications to the source code of [Balsa](https://github.com/balsa-project/balsa) to support Delta:
 
@@ -350,14 +349,14 @@ cp -r ./workloads/Plans ./Delta/PG_Plans
 cp -r ./optimizers/balsa_modified/train_history ./Delta/train_history
 
 # if LOGER:
-cp -r ./optimizers/LOGER_modified/train_history ./Delta/train_history
+cp -r ./optimizers/loger_modified/train_history ./Delta/train_history
 
 # 3. copy test plans from stage one
 # if balsa:
 cp -r ./optimizers/balsa_modified/test_history ./Delta/test_history
 
 # if LOGER:
-cp -r ./optimizers/LOGER_modified/test_history ./Delta/test_history
+cp -r ./optimizers/loger_modified/test_history ./Delta/test_history
 
 ```
 
