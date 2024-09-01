@@ -1,5 +1,5 @@
 T = 500
-topK = 5
+topK = 10
 basemodel = '_balsa' # _loger, _balsa
 pg_plan_dir = "PG_Plans/JOB/rs" # PG_Plans/TPCDS, PG_Plans/JOB/rs, PG_Plans/JOB/slow, PG_Plans/STACK
 # job rs

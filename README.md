@@ -96,20 +96,6 @@ pg_ctl restart -D $PSQL_DATA_DIRECTORY
 
 ### Dataset
 
-cd ./optimizers/balsa_modified
-
-# If run the JOB rs workload:
-
-python run.py --run JOBRandSplit_PostgresSim --local
-
-# If run the JOB slow workload:
-
-python run.py --run JOBSlowSplit_PostgresSim --local
-
-# If run the tpc-ds workload:
-
-python run.py --run TPCDS_PostgresSim --local
-
 1. Load the Join Order Benchmark (JOB) tables: (following Balsa)
 
 ```bash
@@ -125,13 +111,48 @@ bash load-postgres/load_job_postgres.sh ../../datasets/job
 2. Load the STACK:
 
 ```bash
-
+mkdir -p datasets/stack && pushd datasets/stack
+wget https://rmarcus.info/stack.html
+pg_restore -U postgres -d stack -v so_pg13
+popd
 ```
 
 3. Load the TPC-DS:
 
 ```bash
+mkdir -p datasets/tpcds && pushd datasets/tpcds
+mkdir -p tpcds_data
+wget https://www.tpc.org/TPC_Documents_Current_Versions/download_programs/tools-download-request5.asp?bm_type=TPC-DS&bm_vers=3.2.0&mode=CURRENT-ONLY
+unzip TPC-DS-Tool.zip
 
+pushd TPC-DS-Tool/tools
+
+cp Makefile.suite Makefile
+
+make
+
+./dsdgen -scale 10GB -dir ../../tpcds_data  -TERMINATE N
+
+psql -c "create database tpcds"
+
+psql -d tpcds -f tpcds.sql
+
+psql -d tpcds -f ../../../scripts/tpcds/load_data.sql
+
+# if found: psql:../../../scripts/tpcds/load_data.sql:5: ERROR:  invalid byte sequence for encoding "UTF8": 0xd4 0x54
+#           CONTEXT:  COPY customer, line 28
+# then: 
+#    psql -d tpcds
+#    copy customer from '/home/postgres/data/datasets/tpcds_data/customer.dat' with delimiter as '|' NULL '';
+#    \q
+
+psql -d tpcds -f tpcds_ri.sql
+
+psql -d tpcds -f ../../../scripts/tpcds/add_fkindex.sql
+
+popd
+
+popd
 ```
 
 ### Extension
