@@ -1,12 +1,12 @@
 # Delta
 
-Delta is a unified framework on top of DRL-based Query Optimizers.
+Delta is a learned mixed cost-based query optimization framework.
 
-This is the source code of "Delta: A Unified Reinforcement Learning-Based Query Optimization Framework [Scalable Data Science]"
+This is the source code of "Delta: A learned mixed cost-based query optimization framework"
 
 ## Install
 
-To quickly get started, run the following on one machine which will run both the leanrned quey optimizers and query execution.
+To quickly get started, run the following on one machine which will run both the leanrned query optimizers and query execution.
 
 ### Requirement
 
