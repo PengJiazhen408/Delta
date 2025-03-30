@@ -196,9 +196,6 @@ conda activate balsa
 # If run the JOB rs workload:
 bash run.sh JOB rs 
 
-# If run the JOB slow workload:
-bash run.sh JOB slow
-
 # If run the tpc-ds workload:
 bash run.sh tpcds
 
@@ -214,9 +211,6 @@ conda activate balsa
 
 # If run the JOB rs workload:
 python run_workload_store_plans.py -w JOB -s rs
-
-# If run the JOB slow workload:
-python run_workload_store_plans.py -w JOB -s slow
 
 # If run the tpc-ds workload:
 python run_workload_store_plans.py -w tpcds
@@ -261,9 +255,6 @@ cd ./optimizers/balsa_modified
 # If run the JOB rs workload:
 python run.py --run JOBRandSplit_PostgresSim --local
 
-# If run the JOB slow workload:
-python run.py --run JOBSlowSplit_PostgresSim --local
-
 # If run the tpc-ds workload:
 python run.py --run TPCDS_PostgresSim --local
 ```
@@ -283,9 +274,6 @@ cd ./optimizers/balsa_modified
 
 # If run the JOB rs workload:
 python test_runtime.py --run JOBRandSplit_PostgresSim --exp_id ${exp_id}
-
-# If run the JOB slow workload:
-python test_runtime.py --run JOBSlowSplit_PostgresSim --exp_id ${exp_id}
 
 # If run the tpc-ds workload:
 python test_runtime.py --run TPCDS_PostgresSim --exp_id ${exp_id}
@@ -307,9 +295,6 @@ cd ./optimizers/loger_modified
 # If run the JOB rs workload:
 python train.py -d 'dataset/job_rs_train' 'dataset/job_rs_test' -e 200 -F 1 -D imdb -U postgres --port 5432 --mode job_rs
 
-# If run the JOB slow workload:
-python train.py -d 'dataset/job_slow_train' 'dataset/job_slow_test' -e 200 -F 1 -D imdb -U postgres --port 5432 --mode job_slow
-
 # If run the tpc-ds workload:
 python train.py -d 'dataset/tpcds_train' 'dataset/tpcds_test' -e 200 -F 1 -D tpcds -U postgres --port 5432 --mode tpcds
 
@@ -324,9 +309,6 @@ cd ./optimizers/loger_modified
 
 # If run the JOB rs workload:
 python test.py -d 'dataset/job_rs_train' 'dataset/job_rs_test' -e 200 -F 1 -D imdb -U postgres --port 5432 --mode job_rs
-
-# If run the JOB slow workload:
-python test.py -d 'dataset/job_slow_train' 'dataset/job_slow_test' -e 200 -F 1 -D imdb -U postgres --port 5432 --mode job_slow
 
 # If run the tpc-ds workload:
 python test.py -d 'dataset/tpcds_train' 'dataset/tpcds_test' -e 200 -F 1 -D tpcds -U postgres --port 5432 --mode tpcds
@@ -366,10 +348,9 @@ cp -r ./optimizers/loger_modified/test_history ./Delta/test_history
 
 ```bash
 python train.py --qo_name $qo_name
-
 ```
 
-`$qo_name` is Balsa_$dataset/$exp_id or LOGER_$dataset/$exp_id which consistent with the name in train_history, such as, Balsa_JOB_slow/d8awdme0
+`$qo_name` is Balsa_\${dataset}/\${exp_id} or LOGER_\${dataset}/\${exp_id} which consistent with the name in train_history, such as, Balsa_JOB_rs/55u46s73
 
 The key output files:
 
@@ -379,11 +360,10 @@ The key output files:
 
 ```bash
 python test.py --qo_name $qo_name
-
 ```
 
-`$qo_name` is Balsa_$dataset/$exp_id or LOGER_$dataset/$exp_id which consistent with the name in test_history, such as, Balsa_JOB_slow/d8awdme0
+`$qo_name` is Balsa_\${dataset}/\${exp_id} or LOGER_\${dataset}/\${exp_id} which consistent with the name in test_history, such as, Balsa_JOB_rs/55u46s73
 
 The key output files:
 
-- The trained models in stage two is saved in `./Delta/results`.
+- The test results in stage two is saved in `./Delta/results`.
